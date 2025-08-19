@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BT.API", "src\BT.API\BT.API.csproj", "{8F4D0410-2381-43A9-9AFD-0EFD31405392}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BT.Infrastructure", "src\BT.Infrastructure\BT.Infrastructure.csproj", "{4AC22110-8457-428C-A1CD-B3575C968A0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BT.Domain", "src\BT.Domain\BT.Domain.csproj", "{62948972-58DE-46D0-8A0C-2934A278B965}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F4D0410-2381-43A9-9AFD-0EFD31405392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F4D0410-2381-43A9-9AFD-0EFD31405392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F4D0410-2381-43A9-9AFD-0EFD31405392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F4D0410-2381-43A9-9AFD-0EFD31405392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AC22110-8457-428C-A1CD-B3575C968A0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AC22110-8457-428C-A1CD-B3575C968A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AC22110-8457-428C-A1CD-B3575C968A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AC22110-8457-428C-A1CD-B3575C968A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62948972-58DE-46D0-8A0C-2934A278B965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62948972-58DE-46D0-8A0C-2934A278B965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62948972-58DE-46D0-8A0C-2934A278B965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62948972-58DE-46D0-8A0C-2934A278B965}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
