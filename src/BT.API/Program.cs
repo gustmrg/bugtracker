@@ -1,4 +1,5 @@
 using System.Text;
+using BT.Application.Factories;
 using BT.Domain.Entities;
 using BT.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,6 +25,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         options.Password.RequiredLength = 6;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddClaimsPrincipalFactory<BTUserClaimsPrincipalFactory>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>

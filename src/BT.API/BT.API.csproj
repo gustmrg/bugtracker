@@ -32,6 +32,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BT.Application\BT.Application.csproj" />
       <ProjectReference Include="..\BT.Domain\BT.Domain.csproj" />
       <ProjectReference Include="..\BT.Infrastructure\BT.Infrastructure.csproj" />
     </ItemGroup>

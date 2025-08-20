@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BT.API.DTOs;
+using BT.Application.Factories;
 using BT.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +18,20 @@ public class AuthController : ControllerBase
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IConfiguration _configuration;
     private readonly ILogger<AuthController> _logger;
+    private readonly IUserClaimsPrincipalFactory<ApplicationUser> _claimsPrincipalFactory;
 
     public AuthController(
         UserManager<ApplicationUser> userManager, 
         SignInManager<ApplicationUser> signInManager, 
         IConfiguration configuration, 
-        ILogger<AuthController> logger)
+        ILogger<AuthController> logger, 
+        IUserClaimsPrincipalFactory<ApplicationUser> claimsPrincipalFactory)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
         _logger = logger;
+        _claimsPrincipalFactory = claimsPrincipalFactory;
     }
     
     [HttpPost("login")]
@@ -108,7 +112,7 @@ public class AuthController : ControllerBase
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                EmailConfirmed = true // For API usage, skip email confirmation
+                EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -122,7 +126,7 @@ public class AuthController : ControllerBase
                 });
             }
 
-            // Assign default role (you might want to make this configurable)
+            // TODO: Review default role
             await _userManager.AddToRoleAsync(user, "Developer");
 
             var token = await GenerateJwtToken(user);
@@ -166,28 +170,17 @@ public class AuthController : ControllerBase
     
     private async Task<string> GenerateJwtToken(ApplicationUser user)
     {
-        var jwtKey = _configuration["Jwt:Key"]!;
-        var jwtIssuer = _configuration["Jwt:Issuer"]!;
-        var jwtAudience = _configuration["Jwt:Audience"]!;
+        var jwtKey = _configuration["Jwt:Key"];
+        var jwtIssuer = _configuration["Jwt:Issuer"];
+        var jwtAudience = _configuration["Jwt:Audience"];
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        
+        var principal = await _claimsPrincipalFactory.CreateAsync(user);
+        var claims = principal.Claims.ToList();
 
         var userRoles = await _userManager.GetRolesAsync(user);
-        var claims = new List<Claim>
-        {
-            new(ClaimTypes.NameIdentifier, user.Id),
-            new(ClaimTypes.Email, user.Email!),
-            new(ClaimTypes.Name, user.FullName),
-            new("FirstName", user.FirstName),
-            new("LastName", user.LastName)
-        };
-
-        // if (user.CompanyId.HasValue)
-        // {
-        //     claims.Add(new Claim("CompanyId", user.CompanyId.Value.ToString()));
-        // }
-
         foreach (var role in userRoles)
         {
             claims.Add(new Claim(ClaimTypes.Role, role));
