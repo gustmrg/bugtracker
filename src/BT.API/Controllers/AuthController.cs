@@ -180,12 +180,6 @@ public class AuthController : ControllerBase
         var principal = await _claimsPrincipalFactory.CreateAsync(user);
         var claims = principal.Claims.ToList();
 
-        var userRoles = await _userManager.GetRolesAsync(user);
-        foreach (var role in userRoles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
-
         var token = new JwtSecurityToken(
             issuer: jwtIssuer,
             audience: jwtAudience,

@@ -2,6 +2,7 @@ using System.Text;
 using BT.Application.Factories;
 using BT.Domain.Entities;
 using BT.Infrastructure;
+using BT.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -95,6 +96,12 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await DataHelper.SeedRolesAsync(roleManager);
+}
 
 if (app.Environment.IsDevelopment())
 {
