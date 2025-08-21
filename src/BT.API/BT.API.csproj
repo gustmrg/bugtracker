@@ -39,6 +39,7 @@
 
     <ItemGroup>
       <Folder Include="Factories\" />
+      <Folder Include="Models\Common\" />
     </ItemGroup>
 
 </Project>

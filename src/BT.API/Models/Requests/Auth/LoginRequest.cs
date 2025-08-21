@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BT.API.DTOs;
+namespace BT.API.Models.Requests.Auth;
 
 public class LoginRequest
 {

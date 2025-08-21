@@ -1,8 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
-using BT.API.DTOs;
-using BT.Application.Factories;
+using BT.API.Models.Requests.Auth;
+using BT.API.Models.Responses.Auth;
+using BT.API.Models.Responses.Users;
 using BT.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -68,7 +68,7 @@ public class AuthController : ControllerBase
                 Message = "Login successful.",
                 Token = token,
                 TokenExpiry = DateTime.UtcNow.AddMinutes(GetTokenExpiryMinutes()),
-                User = new UserInfo
+                User = new UserResponse
                 {
                     Id = user.Id,
                     Email = user.Email!,
@@ -138,7 +138,7 @@ public class AuthController : ControllerBase
                 Message = "Registration successful.",
                 Token = token,
                 TokenExpiry = DateTime.UtcNow.AddMinutes(GetTokenExpiryMinutes()),
-                User = new UserInfo
+                User = new UserResponse
                 {
                     Id = user.Id,
                     Email = user.Email,
